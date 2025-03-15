@@ -1,21 +1,24 @@
-import type { IUrlDto, IUrlInfoDto } from "./dto"
+import type { IUrlDto, IUrlInfoDto } from "./dto.ts"
 
-export const shortenUrl = (url: IUrlDto): string | void => {
-    return ''
-}
 
-export const redirect = (url: string): string | void => {
-    return ''
-}
-
-export const getUrlInfo = (url: string): IUrlInfoDto | void => {
-    return {
-        originalUrl: '',
-        createdAt: '',
-        clickCount: 0
+export const UrlController = {
+    shortenUrl: (url: IUrlDto): string | void => {
+        return ''
+    },
+    
+    redirect: (url: string): string | void => {
+        return ''
+    },
+    
+    getUrlInfo: (url: string): IUrlInfoDto | void => {
+        return {
+            originalUrl: '',
+            createdAt: '',
+            clickCount: 0
+        }
+    },
+    
+    deleteUrlInfo: (url: string): number => {
+        return 0
     }
-}
-
-export const deleteUrlInfo = (url: string): number => {
-    return 0
 }

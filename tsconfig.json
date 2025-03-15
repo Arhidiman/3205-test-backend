@@ -1,11 +1,28 @@
 {
     "compilerOptions": {
-      "target": "ESNext",
-      "module": "ESNext",
-      "skipLibCheck": true,
-      "outDir": "./dist"
+        "target": "ESNext",
+        "module": "NodeNext",
+        "skipLibCheck": true,
+        "outDir": "./dist",
+        "allowImportingTsExtensions": true,
+        "emitDeclarationOnly": true,
+        "composite": true
     },
     "include": ["./src/**/*.ts"],
     "exclude": ["node_modules"]
-  }
+}
+  
+
+// {
+//     "compilerOptions": {
+//       "target": "ESNext",
+//       "module": "NodeNext",
+//       "moduleResolution": "NodeNext",
+//       "skipLibCheck": true,
+//       "outDir": "./dist",
+//       "strict": true
+//     },
+//     "include": ["src"],
+//     "exclude": ["node_modules"]
+//   }
   
