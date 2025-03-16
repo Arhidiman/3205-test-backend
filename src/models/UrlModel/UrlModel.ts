@@ -15,7 +15,7 @@ export const UrlModel = {
 
         res.json(shortUrl)
     },
-    redirect: async (req: Request<any, string>, res: Response): Promise<void> => {
+    redirect: async (req: Request<{ shortUrl: string }, string>, res: Response): Promise<void> => {
         const { shortUrl } = req.params
         const record = await Url.findOne({ where: { shortUrl }})
 
@@ -28,8 +28,16 @@ export const UrlModel = {
         await Statistics.create({ urlId: id, ip: String(ip), createdAt: new Date() })
         res.send(originalUrl)
     },
-    getUrlInfo: async (req, res): Promise<void> => {
+    getUrlInfo: async (req: Request<{ shortUrl: string }>, res: Response): Promise<void> => {
         const { shortUrl } = req.params
+        const record = await Url.findOne({ where: { shortUrl }})
+
+        if (!record) throw new Error('Ссылка не найдена')
+
+        const { id, originalUrl, createdAt } = record.dataValues
+        const clickRecords = await Statistics.findAll({ raw: true, where: { urlId: id }})
+        
+        res.send({ originalUrl, createdAt, clickCount: clickRecords.length})
     },
     deleteUrlInfo: async (req, res): Promise<void> => {
         const {url: shortenUrl} = req.params

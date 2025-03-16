@@ -13,7 +13,7 @@ app.post('/shorten', UrlController.shortenUrl)
 
 app.get('/:shortUrl', UrlController.redirect)
 
-app.get('/info:shortUrl', UrlController.getUrlInfo)
+app.get('/info/:shortUrl', UrlController.getUrlInfo)
 
 app.delete('/delete/:url', UrlController.deleteUrlInfo)
 
