@@ -1,4 +1,5 @@
 import { Url } from "./Url.ts"
+import { Statistics } from "../StatisticsModel/Statistics.ts"
 import type { Request, Response } from "express"
 import type { IUrlDto, IUrlInfoDto } from "./dto.ts"
 
@@ -11,12 +12,11 @@ export const UrlModel = {
 
         const shortUrl = `${hostname}/${alias}`
 
-        console.log(shortUrl)
+        const record = await Url.create({originalUrl, shortUrl, alias, expiresAt: new Date(), createdAt: new Date()})
 
-        await Url.create({originalUrl, shortUrl, alias, expiresAt: new Date(), createdAt: new Date()})
+        // Statistics.create({ ip, createdAt })
+
         res.json(shortUrl)
-
-
     },
     redirect: async (req: Request<any, string>, res): Promise<void> => {
         const { shortUrl } = req.params

@@ -30,10 +30,6 @@ export const Url = sequelizeInstance.define('urls',
         createdAt: {
             type: DataTypes.DATE,
             allowNull: false,
-        },
-        clickCount: {
-            type: DataTypes.INTEGER,
-            allowNull: true,
         }
     },
     {
