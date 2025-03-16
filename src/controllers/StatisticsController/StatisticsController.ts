@@ -1,8 +1,13 @@
-import { IUrlStatisticsDto } from "./dto";
+import type { Request, Response } from "express";
+import { StatisticsModel } from "../../models/StatisticsModel/StatisticsModel.ts";
 
-export const getUrlStatistics = (url: string): IUrlStatisticsDto => {
-    return {
-        clicksCount: 0,
-        lastIps: ['123']
-    }
+export const StatisticsController = {
+    getUrlStatistics: async (req: Request<{ shortUrl: string }>, res: Response): Promise<void> => {
+        try {
+            await StatisticsModel.getInfo(req, res)
+        } catch (err) {
+            res.status(500).send(`Ошибка при получении статистики ${err.message}`)
+        }
+    }   
 }
+

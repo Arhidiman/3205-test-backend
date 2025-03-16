@@ -3,6 +3,7 @@ import bodyParser from 'body-parser'
 import cors from 'cors'
 import { sequelizeInstance } from "./db/sequelizeInstance.ts"
 import { UrlController } from "./controllers/UrlController/UrlController.ts"
+import { StatisticsController } from './controllers/StatisticsController/StatisticsController.ts'
 
 const app = express()
 app.use([bodyParser.json(), cors()])
@@ -15,10 +16,9 @@ app.get('/:shortUrl', UrlController.redirect)
 
 app.get('/info/:shortUrl', UrlController.getUrlInfo)
 
-app.delete('/delete/:url', UrlController.deleteUrlInfo)
+app.delete('/delete/:shortUrl', UrlController.deleteUrlInfo)
 
-
-
+app.get('/statistics/:shortUrl', StatisticsController.getUrlStatistics)
 
 
 app.listen(PORT, async () => {

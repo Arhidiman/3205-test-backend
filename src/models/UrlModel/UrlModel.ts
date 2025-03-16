@@ -1,7 +1,7 @@
 import { Url } from "./Url.ts"
 import { Statistics } from "../StatisticsModel/Statistics.ts"
 import type { Request, Response } from "express"
-import type { IUrlDto, IUrlInfoDto } from "./dto.ts"
+import type { IUrlDto } from "./dto.ts"
 
 export const UrlModel = {
     shortenUrl: async (req: Request<any, IUrlDto>, res: Response): Promise<void> => {
@@ -36,13 +36,12 @@ export const UrlModel = {
 
         const { id, originalUrl, createdAt } = record.dataValues
         const clickRecords = await Statistics.findAll({ raw: true, where: { urlId: id }})
-        
+
         res.send({ originalUrl, createdAt, clickCount: clickRecords.length})
     },
     deleteUrlInfo: async (req, res): Promise<void> => {
-        const {url: shortenUrl} = req.params
-        await Url.destroy({ where: { shortenUrl }})
+        const { shortUrl } = req.params
+        await Url.destroy({ where: { shortUrl }})
         res.send('Ссылка удалена')
     }
-
 }
