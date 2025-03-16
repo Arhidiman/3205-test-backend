@@ -1,6 +1,4 @@
 import { UrlModel } from "../../models/UrlModel/UrlModel.ts"
-import type { IUrlDto, IUrlInfoDto } from "../../models/UrlModel/dto.ts"
-
 
 export const UrlController = {
     shortenUrl: async (req, res): Promise<void> => {
@@ -34,6 +32,14 @@ export const UrlController = {
             await UrlModel.deleteUrlInfo(req, res)
         } catch(err: any) {
             res.error(500)
+        }
+    },
+
+    getAllUrls: async (req, res): Promise<void> => {
+        try {
+            await UrlModel.getAll(req, res)
+        } catch(err: any) {
+            res.error(500).send(`Ошибка получения списка ссылок. ${err.message}`)
         }
     }
 }

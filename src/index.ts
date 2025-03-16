@@ -12,6 +12,8 @@ const PORT = 5000
 
 app.post('/shorten', UrlController.shortenUrl)
 
+app.get('/urls', UrlController.getAllUrls)
+
 app.get('/:shortUrl', UrlController.redirect)
 
 app.get('/info/:shortUrl', UrlController.getUrlInfo)

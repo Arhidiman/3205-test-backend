@@ -43,5 +43,9 @@ export const UrlModel = {
         const { shortUrl } = req.params
         await Url.destroy({ where: { shortUrl }})
         res.send('Ссылка удалена')
+    },
+    getAll: async (req: Request, res: Response) => {
+        const records = await Url.findAll()
+        res.send(records)
     }
 }
