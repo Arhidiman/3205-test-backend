@@ -11,23 +11,22 @@ export const UrlModel = {
         const { hostname } = url
 
         const shortUrl = `${hostname}/${alias}`
-
-        const record = await Url.create({originalUrl, shortUrl, alias, expiresAt: new Date(), createdAt: new Date()})
-
-        // Statistics.create({ ip, createdAt })
+        await Url.create({originalUrl, shortUrl, alias, expiresAt: new Date(), createdAt: new Date()})
 
         res.json(shortUrl)
     },
-    redirect: async (req: Request<any, string>, res): Promise<void> => {
+    redirect: async (req: Request<any, string>, res: Response): Promise<void> => {
         const { shortUrl } = req.params
         const record = await Url.findOne({ where: { shortUrl }})
 
         if (!record) throw new Error('Ссылка не найдена')
 
+        const { id } = record.dataValues
         const { originalUrl } = record.dataValues
+        const { ip } = req
 
+        await Statistics.create({ urlId: id, ip: String(ip), createdAt: new Date() })
         res.send(originalUrl)
-        // console.log(fullUrl, 'FULL url')
     },
     getUrlInfo: async (req, res): Promise<void> => {
         const { shortUrl } = req.params
