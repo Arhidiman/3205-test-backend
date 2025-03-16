@@ -3,33 +3,35 @@ import type { IUrlDto, IUrlInfoDto } from "../../models/UrlModel/dto.ts"
 
 
 export const UrlController = {
-    shortenUrl: async (req, res) => {
+    shortenUrl: async (req, res): Promise<void> => {
         try {
-            return await UrlModel.shortenUrl(req, res)
-        } catch(err: any) {
-            res.status(500).send(`Ошибка создания укороченной ссылки. ${err.message}`)
+            await UrlModel.shortenUrl(req, res)
+        } catch(err) {
+            if(err?.original?.code === '23505') {
+                res.status(500).send(`Укороченная ссылка должна быть уникальной.\n Укажите другой сайт либо псевдоним`)
+            }
         }
     },
     
-    redirect: async (req, res): Promise<string | void> => {
+    redirect: async (req, res): Promise<void> => {
         try {
-            return await UrlModel.redirect(req, res)
+            await UrlModel.redirect(req, res)
         } catch(err: any) {
-            res.status(500).send('Ошибка перенаправления')
+            res.status(500).send(`Ошибка перенаправления. ${err.message}`)
         }
     },
     
-    getUrlInfo: async (req, res): Promise<IUrlInfoDto | void> => {
+    getUrlInfo: async (req, res): Promise<void> => {
         try {
-            return await UrlModel.getUrlInfo(req, res)
+            await UrlModel.getUrlInfo(req, res)
         } catch(err: any) {
             res.error(500)
         }
     },
     
-    deleteUrlInfo: async (req, res): Promise<number> => {
+    deleteUrlInfo: async (req, res): Promise<void> => {
         try {
-            return await UrlModel.deleteUrlInfo(req, res)
+            await UrlModel.deleteUrlInfo(req, res)
         } catch(err: any) {
             res.error(500)
         }

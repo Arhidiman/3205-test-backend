@@ -12,6 +12,7 @@ export const Url = sequelizeInstance.define('urls',
         originalUrl: {
             type: DataTypes.STRING,
             allowNull: false,
+            unique: true
         },
         expiresAt: {
             type: DataTypes.DATE,
@@ -21,11 +22,19 @@ export const Url = sequelizeInstance.define('urls',
             type: DataTypes.STRING,
             allowNull: true
         },
-        shortenUrl: {
+        shortUrl: {
             type: DataTypes.STRING,
             allowNull: false,
             unique: true
         },
+        createdAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+        },
+        clickCount: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+        }
     },
     {
         tableName: 'urls', timestamps: false

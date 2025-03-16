@@ -11,12 +11,17 @@ const PORT = 5000
 
 app.post('/shorten', UrlController.shortenUrl)
 
-app.get('/short-url', (req, res) => console.log(req, res))
-app.get('/info', (req, res) => console.log(req, res))
-app.delete('/delete', (req, res) => console.log(req, res))
+app.get('/:shortUrl', UrlController.redirect)
+
+app.get('/info:shortUrl', UrlController.getUrlInfo)
+
+app.delete('/delete/:url', UrlController.deleteUrlInfo)
+
+
+
+
 
 app.listen(PORT, async () => {
-
     await sequelizeInstance.sync()
     console.log('sequilize successfully syncronized !')
     try {

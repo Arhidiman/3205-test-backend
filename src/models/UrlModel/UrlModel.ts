@@ -1,40 +1,41 @@
 import { Url } from "./Url.ts"
+import type { Request, Response } from "express"
 import type { IUrlDto, IUrlInfoDto } from "./dto.ts"
 
 export const UrlModel = {
-    shortenUrl: async (req, res) => {
+    shortenUrl: async (req: Request<any, IUrlDto>, res: Response): Promise<void> => {
         const { originalUrl, alias, expiresAt }: IUrlDto = req.body
 
         const url = new URL(originalUrl)
-        const { protocol, hostname } = url
-        const shortenUrl = `${protocol}://${hostname}/${alias}`
+        const { hostname } = url
 
-        try {
-            const record = await Url.create({originalUrl, shortenUrl, alias, expiresAt: new Date()})
-            res.json(shortenUrl)
-        } catch(err) {
-            if(err?.original.code === '23505') {
-                throw new Error ('Укороченная ссылка должна быть уникальной.\n Укажите другой сайт либо псевдоним')
-            }
-            console.log(err[0])
-        }
+        const shortUrl = `${hostname}/${alias}`
+
+        console.log(shortUrl)
+
+        await Url.create({originalUrl, shortUrl, alias, expiresAt: new Date(), createdAt: new Date()})
+        res.json(shortUrl)
+
 
     },
-    
-    redirect: async (req, res): Promise<string | void> => {
-        return ''
+    redirect: async (req: Request<any, string>, res): Promise<void> => {
+        const { shortUrl } = req.params
+        const record = await Url.findOne({ where: { shortUrl }})
+
+        if (!record) throw new Error('Ссылка не найдена')
+
+        const { originalUrl } = record.dataValues
+
+        res.send(originalUrl)
+        // console.log(fullUrl, 'FULL url')
     },
-    
-    getUrlInfo: async (req, res): Promise<IUrlInfoDto | void> => {
-        return {
-            originalUrl: '',
-            createdAt: '',
-            clickCount: 0
-        }
+    getUrlInfo: async (req, res): Promise<void> => {
+        const { shortUrl } = req.params
     },
-    
-    deleteUrlInfo: async (req, res): Promise<number> => {
-        return 0
+    deleteUrlInfo: async (req, res): Promise<void> => {
+        const {url: shortenUrl} = req.params
+        await Url.destroy({ where: { shortenUrl }})
+        res.send('Ссылка удалена')
     }
 
 }
