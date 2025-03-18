@@ -13,7 +13,11 @@ export const StatisticsModel = {
         if (!record) throw new Error('Ссылка не найдена')
 
         const { id } = record.dataValues
-        const clickStats = await Statistics.findAll({ raw: true, where: { urlId: id }})
+        const clickStats = await Statistics.findAll({ 
+            raw: true, 
+            where: { urlId: id }, 
+            order: [['createdAt', 'DESC']]
+        })
 
         res.send(clickStats)
     }
