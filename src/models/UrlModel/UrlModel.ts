@@ -29,6 +29,8 @@ export const UrlModel = {
         const { shortUrl } = req.params
         const record = await Url.findOne({ where: { shortUrl }})
 
+        console.log('НЕт ссылки')
+
         if (!record) throw new Error('Ссылка не существует')
 
         const { id } = record.dataValues

@@ -10,7 +10,7 @@ export const StatisticsModel = {
         const { shortUrl } = req.params
         const record = await Url.findOne({ where: { shortUrl }})
 
-        if (!record) throw new Error('Ссылка не найдена')
+        if (!record) throw new Error('Ссылка не существует')
 
         const { id } = record.dataValues
         const clickStats = await Statistics.findAll({ 

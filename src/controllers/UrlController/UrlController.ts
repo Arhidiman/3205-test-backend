@@ -15,7 +15,11 @@ export const UrlController = {
         try {
             await UrlModel.redirect(req, res)
         } catch(err: any) {
-            res.status(500).send(`Ошибка перенаправления. ${err.message}`)
+            if (err.message.includes('Ссылка не существует')) {
+                res.status(404).send(err.message)
+            } else {
+                res.status(500).send(`Ошибка перенаправления. ${err.message}`)
+            }
         }
     },
     
