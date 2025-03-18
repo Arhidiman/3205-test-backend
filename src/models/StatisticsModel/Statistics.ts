@@ -16,7 +16,7 @@ export const Statistics = sequelizeInstance.define('statistics',
             references: {
                 model: Url,
                 key: 'id',
-                deferrable: Deferrable.INITIALLY_IMMEDIATE()
+                deferrable: Deferrable.INITIALLY_IMMEDIATE(),
             }
         },
         ip: {

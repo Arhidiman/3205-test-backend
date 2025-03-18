@@ -1,4 +1,5 @@
 import { DataTypes } from "sequelize";
+import { Statistics } from "../StatisticsModel/Statistics.ts";
 import { sequelizeInstance } from "../../db/sequelizeInstance.ts";
 
 export const Url = sequelizeInstance.define('urls',
@@ -12,7 +13,6 @@ export const Url = sequelizeInstance.define('urls',
         originalUrl: {
             type: DataTypes.STRING,
             allowNull: false,
-            unique: true
         },
         expiresAt: {
             type: DataTypes.DATE,

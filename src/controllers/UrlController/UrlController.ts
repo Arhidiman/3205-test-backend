@@ -23,7 +23,7 @@ export const UrlController = {
         try {
             await UrlModel.getUrlInfo(req, res)
         } catch(err: any) {
-            res.error(500)
+            res.status(500).send(`Ошибка получения информации о ссылке. ${err.message}`)
         }
     },
     
@@ -31,7 +31,7 @@ export const UrlController = {
         try {
             await UrlModel.deleteUrlInfo(req, res)
         } catch(err: any) {
-            res.error(500)
+            res.status(500).send(`Ошибка удаления ссылки. ${err.message}`)
         }
     },
 
@@ -39,7 +39,7 @@ export const UrlController = {
         try {
             await UrlModel.getAll(req, res)
         } catch(err: any) {
-            res.error(500).send(`Ошибка получения списка ссылок. ${err.message}`)
+            res.err(500).send(`Ошибка получения списка ссылок. ${err.message}`)
         }
     }
 }
