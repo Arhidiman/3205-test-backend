@@ -19,9 +19,10 @@ export const UrlModel = {
 
         const url = new URL(originalUrl)
         const { hostname } = url
-
         const shortUrl = `${hostname}/${alias || generateString()}`
-        await Url.create({originalUrl, shortUrl, alias, expiresAt: new Date(expiresAt), createdAt: new Date()})
+        const expires = expiresAt ? new Date(expiresAt) : null
+
+        await Url.create({originalUrl, shortUrl, alias, expiresAt: expires, createdAt: new Date()})
 
         res.json(shortUrl)
     },

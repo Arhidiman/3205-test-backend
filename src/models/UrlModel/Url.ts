@@ -16,7 +16,7 @@ export const Url = sequelizeInstance.define('urls',
         },
         expiresAt: {
             type: DataTypes.DATE,
-            allowNull: false,
+            allowNull: true,
         },
         alias: {
             type: DataTypes.STRING,

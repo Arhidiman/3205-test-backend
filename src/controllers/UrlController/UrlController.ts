@@ -7,6 +7,8 @@ export const UrlController = {
         } catch(err) {
             if(err?.original?.code === '23505') {
                 res.status(500).send(`Укороченная ссылка должна быть уникальной.\n Укажите другой сайт либо псевдоним`)
+            } else {
+                res.status(500).send(`Ошибка при создании ссылки. \n${err.message}`)
             }
         }
     },
